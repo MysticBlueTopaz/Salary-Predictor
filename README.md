@@ -422,19 +422,19 @@ Reach out to Abishek on Slack if you have any questions or get stuck!
 
 > **Important:** This section is the first thing visitors see when they land on your GitHub repo. This is your portfolio—make it professional and complete! Update this before your final submission.
 
-**Student Name:** [Your Name]
+**Student Name:** Erika Wooldridge
 
-**Dataset:** [Dataset name and source - include a link if from Kaggle]
+**Dataset:** Data Science, AI & ML Job Salaries in 2025 link: https://www.kaggle.com/datasets/adilshamim8/salaries-for-data-science-jobs
 
-**Problem Statement:** [What are you trying to predict and why? Write 2-3 sentences explaining the value of this prediction.]
+**Problem Statement:** What is the expected salary of an AI/ML position based on experience, job title, and other factors that may contribute. to salary expectations? 
 
-**Target Variable:** [Column name - e.g., "price" or "salary"]
+**Target Variable:** Salary in USD
 
-**Selected Features:** [List the 4-8 features your final model uses]
+**Selected Features:** The features that will help predict a baseline salary include experience level, company size, and location.
 
-**Best Regression Model:** [Model type and key metric - e.g., "Random Forest (R² = 0.82)"]
+**Best Regression Model:** After altering some of the fields and adding Gradient Boosting, there was a tie with Gradient Boosting and Random Forest. Although there was a tie Gradient Boosting performed better in the training and therefore I chose Gradient Boosting because it builds trees sequentially to minimize errors. 
 
-**Best Classification Model:** [Model type and key metric - e.g., "Gradient Boosting (Accuracy = 85%)"]
+**Best Classification Model:** Technacally, Decision Tree, Random Forest, Gradient Boosting, and Voting Classifier are in a tie with an accuracy score of 52.72%
 
 **Deployed App URL:** [Add your Streamlit Cloud URL once deployed]
 
