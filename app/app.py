@@ -36,7 +36,7 @@ from pathlib import Path
 # =============================================================================
 # This must be the first Streamlit command!
 st.set_page_config(
-    page_title="ML Prediction App",  # TODO: Update with your project name
+    page_title="AI Salary Predictor",  
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -114,15 +114,17 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("### About")
 st.sidebar.info(
     """
-    This app deploys machine learning models trained on [YOUR DATASET].
+  This AI-powered tool predicts global salaries for Data Science and ML roles. 
+  It leverages machine learning to provide data-driven insights for career planning.
 
-    - **Regression**: Predicts [YOUR TARGET]
-    - **Classification**: Predicts [YOUR CATEGORIES]
+  **How the AI works:**
+  * 📈 **Regression**: Predicts the exact **Salary (USD)**.
+  * 🎓 **Classification**: Predicts the **Experience Level**.
     """
 )
 # TODO: UPDATE YOUR NAME HERE! This shows visitors who built this app.
-st.sidebar.markdown("**Built by:** [YOUR NAME]")
-st.sidebar.markdown("[GitHub Repo](https://github.com/YOUR-USERNAME/YOUR-REPO)")
+st.sidebar.markdown("**Built by:** Erika Wooldridge")
+st.sidebar.markdown("[GitHub Repo](https://github.com/MysticBlueTopaz/Salary-Predictor")
 
 
 # =============================================================================
@@ -137,10 +139,10 @@ if page == "🏠 Home":
         This application allows you to make predictions using trained machine learning models.
 
         **What you can do:**
-        - 📈 **Regression Model**: Predict a numerical value
-        - 🏷️ **Classification Model**: Predict a category
+          - 📈 **Regression**: Predict the estimated **Salary in USD**.
+          - 🏷️ **Classification**: Predict the likely **Experience Level**.
 
-        Use the sidebar to navigate between different models.
+Use the sidebar to navigate between different models.
         """
     )
 
@@ -149,13 +151,13 @@ if page == "🏠 Home":
     st.markdown("### About This Project")
     st.write(
         """
-        **Dataset:** [Describe your dataset]
+        **Dataset:** The model is trained on a comprehensive dataset of **Global AI, ML, and Data Science Salaries**, covering various roles, experience levels, and company sizes from 2020 to 2024.
 
-        **Problem Statement:** [What are you predicting and why?]
+        **Problem Statement:** The tech industry is rapidly evolving, and compensation varies wildly by geography and expertise. This tool helps professionals and recruiters estimate fair market value (Regression) and identify typical career stages (Classification).
 
         **Models Used:**
-        - Regression: [Your regression model type]
-        - Classification: [Your classification model type]
+            - **Regression:** Random Forest Regressor (optimized for predicting continuous USD salary).
+            - **Classification:** Logistic Regression / XGBoost (used to categorize Experience Levels).
         """
     )
 
