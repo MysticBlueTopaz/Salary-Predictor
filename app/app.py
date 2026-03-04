@@ -124,7 +124,10 @@ st.sidebar.info(
 )
 # TODO: UPDATE YOUR NAME HERE! This shows visitors who built this app.
 st.sidebar.markdown("**Built by:** Erika Wooldridge")
-st.sidebar.markdown("[GitHub Repo](https://github.com/MysticBlueTopaz/Salary-Predictor")
+st.sidebar.markdown("---")
+st.sidebar.markdown(
+    "[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/MysticBlueTopaz/Salary-Predictor)"
+)
 
 
 # =============================================================================
