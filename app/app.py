@@ -134,7 +134,7 @@ st.sidebar.markdown(
 # HOME PAGE
 # =============================================================================
 if page == "🏠 Home":
-    st.title("🤖 Machine Learning Prediction App")
+    st.title("🤖 Machine Learning Salary Prediction App")
     st.markdown("### Welcome!")
 
     st.write(
@@ -154,7 +154,7 @@ Use the sidebar to navigate between different models.
     st.markdown("### About This Project")
     st.write(
         """
-        **Dataset:** The model is trained on a comprehensive dataset of **Global AI, ML, and Data Science Salaries**, covering various roles, experience levels, and company sizes from 2020 to 2024.
+        **Dataset:** The model is trained on a comprehensive dataset of **Global AI, ML, and Data Science Salaries**, covering various roles, experience levels, and company sizes from 2020 to 2025.
 
         **Problem Statement:** The tech industry is rapidly evolving, and compensation varies wildly by geography and expertise. This tool helps professionals and recruiters estimate fair market value (Regression) and identify typical career stages (Classification).
 
@@ -196,21 +196,33 @@ elif page == "📈 Regression Model":
 
     # Create columns for better layout
     col1, col2 = st.columns(2)
-
     input_values = {}
 
     for i, feature in enumerate(features):
-        # Alternate between columns
         with col1 if i % 2 == 0 else col2:
-            # TODO: Customize each input based on your feature type and range
-            # Example: For a feature like 'bedrooms' you might use:
-            # input_values[feature] = st.number_input(feature, min_value=0, max_value=10, value=3)
+            # 1. CHECKBOX for Binary/Boolean features (e.g., 'Remote')
+            if "remote" in feature.lower():
+                input_values[feature] = st.checkbox(
+                    label=f"Is this a {feature} position?",
+                    value=False,
+                    help="Check if this is a remote role"
+                )
+            
+            # 2. SELECTBOX for Categories (if your features are strings/objects)
+            elif "experience" in feature.lower() or "size" in feature.lower():
+                options = ["Entry", "Mid", "Senior", "Executive"] # Update to match your data
+                choice = st.selectbox(label=feature, options=options)
+                # Note: You may need to map these back to numbers if your model expects 0, 1, 2
+                input_values[feature] = choice 
 
-            input_values[feature] = st.number_input(
-                label=feature,
-                value=0.0,  # Default value - UPDATE THIS
-                help=f"Enter value for {feature}"
-            )
+            # 3. NUMBER/SLIDER for everything else
+            else:
+                input_values[feature] = st.number_input(
+                    label=feature,
+                    min_value=0.0,
+                    value=0.0,
+                    step=1.0
+                )
 
     st.markdown("---")
 
@@ -323,7 +335,7 @@ st.markdown("---")
 st.markdown(
     """
     <div style='text-align: center; color: gray;'>
-        Built by [YOUR NAME] | Full Stack Academy AI & ML Bootcamp
+        Built by Erika Wooldridge | Full Stack Academy AI & ML Bootcamp
     </div>
     """,
     unsafe_allow_html=True
