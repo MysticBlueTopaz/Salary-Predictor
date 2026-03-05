@@ -198,31 +198,41 @@ elif page == "📈 Regression Model":
     col1, col2 = st.columns(2)
     input_values = {}
 
-    for i, feature in enumerate(features):
-        with col1 if i % 2 == 0 else col2:
-            # 1. CHECKBOX for Binary/Boolean features (e.g., 'Remote')
-            if "remote" in feature.lower():
-                input_values[feature] = st.checkbox(
-                    label=f"Is this a {feature} position?",
-                    value=False,
-                    help="Check if this is a remote role"
-                )
-            
-            # 2. SELECTBOX for Categories (if your features are strings/objects)
-            elif "experience" in feature.lower() or "size" in feature.lower():
-                options = ["Entry", "Mid", "Senior", "Executive"] # Update to match your data
-                choice = st.selectbox(label=feature, options=options)
-                # Note: You may need to map these back to numbers if your model expects 0, 1, 2
-                input_values[feature] = choice 
 
-            # 3. NUMBER/SLIDER for everything else
-            else:
-                input_values[feature] = st.number_input(
-                    label=feature,
-                    min_value=0.0,
-                    value=0.0,
-                    step=1.0
+    exp_map = {"Entry": 1, "Mid": 2, "Senior": 3, "Executive": 4}
+    friendly_labels = {
+        "experience_level": "Experience Level",
+        "company_location_US": "Is this company in the United States?",
+        "job_title_Machine Learning Engineer": "Is this a Machine Learning Engineer?",
+        "company_location_Other": "Is this Company outside the United States",
+        "job_title_Data Analyst": "Is this job Data Analyst",
+        "job_title_Software Engineer": "Is this job Software Engineer",
+        "job_title_Other": "Is this job Other"
+    }
+
+    for i, feature in enumerate(features):
+            col1, col2 = st.columns(2)
+            # Create a clean version of the label
+            # Example: 'remote_ratio' becomes 'Remote Ratio'
+            clean_label = feature.replace('_', ' ').title()
+
+            # Check if it's the experience feature
+            if feature == "experience_level":
+            # Show friendly text, but save the mapped number
+                level = st.selectbox(
+                "Experience Level", 
+                options=list(exp_map.keys()),
+                index=0
                 )
+                input_values[feature] = exp_map[level]
+            
+            else:
+                # Use your friendly labels for the checkboxes
+                display_name = friendly_labels.get(feature, feature)
+                # This returns 1 for checked, 0 for unchecked
+                input_values[feature] = st.checkbox(display_name, value=False)
+        
+
 
     st.markdown("---")
 
@@ -235,7 +245,7 @@ elif page == "📈 Regression Model":
         prediction = make_regression_prediction(models, input_df)
 
         # Display result
-        st.success(f"### Predicted Value: {prediction:,.2f}")
+        st.success(f"### Predicted Value: ${prediction:,.2f}")
 
         # TODO: Add context to your prediction
         # st.write(f"This means... [interpretation]")
@@ -252,6 +262,16 @@ elif page == "🏷️ Classification Model":
     st.title("🏷️ Classification Prediction")
     st.write("Enter feature values to get a category prediction.")
 
+    exp_map = {"Entry": 1, "Mid": 2, "Senior": 3, "Executive": 4}
+    friendly_labels = {
+        "experience_level": "Experience Level",
+        "company_location_US": "Is this company in the United States?",
+        "job_title_Machine Learning Engineer": "Is this a Machine Learning Engineer?",
+        "company_location_Other": "Is this Company outside the United States",
+        "job_title_Data Analyst": "Is this job Data Analyst",
+        "job_title_Software Engineer": "Is this job Software Engineer",
+        "job_title_Other": "Is this job Other"
+    }
     # Load models
     models = load_models()
 
@@ -289,14 +309,28 @@ elif page == "🏷️ Classification Model":
 
     input_values = {}
 
+    # Create the inputs in a single vertical stack
     for i, feature in enumerate(features):
-        with col1 if i % 2 == 0 else col2:
-            # TODO: Customize each input based on your feature type and range
-            input_values[feature] = st.number_input(
-                label=feature,
-                value=0.0,
-                key=f"class_{feature}",  # Unique key for classification inputs
-                help=f"Enter value for {feature}"
+        display_name = friendly_labels.get(feature, feature.replace('_', ' ').title())
+
+        # DROPDOWN for experience
+        if feature == "experience_level":
+            level = st.selectbox(
+                display_name, 
+                options=list(exp_map.keys()),
+                key=f"class_select_{feature}", # Unique key for this page
+                help="Select your current professional level"
+            )
+            input_values[feature] = exp_map[level]
+            
+        # CHECKBOXES for everything else
+        else:
+            input_values[feature] = st.checkbox(
+                display_name, 
+                value=False, 
+                key=f"class_check_{feature}", # Unique key for this page
+                help=f"Check if {feature} applies"
+            
             )
 
     st.markdown("---")
